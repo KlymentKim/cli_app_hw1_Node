@@ -1,17 +1,11 @@
-const fs = require("fs/promises"); // first optional
+const fs = require("node:fs/promises"); // first optional
 // import { promises as fs } from "fs"; //second optional
-
-const path = require("node:path"); //default path
-const crypto = require("node:crypto"); //id generator
-
+const path = require("path"); //default path
+// const crypto = require("crypto"); //id generator
 const  {nanoid}  = require('nanoid');
 
-const contactPath = path.join(__dirname,  'conatcts.json');
+const contactPath = path.join(__dirname, 'db',  'contacts.json');
 
-console.log(contactPath);
-
-
-// TODO: задокументувати кожну функцію
 const listContacts = async()=>{
   //...твій код. Повертає масив контактів.
   const contacts = await fs.readFile(contactPath, 'utf8');
@@ -58,18 +52,18 @@ const listContacts = async()=>{
     // ...твій код. Повертає об'єкт видаленого контакту. Повертає null, якщо контакт з таким id не знайдений.
     const contacts = await listContacts();
     const idConctact = contacts.find(contact => contact.id === contactId);
-    if(idConctact === -length-1){
+    if(idConctact === -1){
       return null;
     } 
-  }
-  console.log(removeContact);
+    const [result] = contacts.splice(index, 1);
+    await fs.readFile(contactsPath, JSON.stringify(contacts, null, 2));
+    return result;
 
+  }
   module.exports = {
     listContacts,
     getAllContacts,
     getContactById,
     addContact,
     removeContact,
-  }
-  
-  rs
+  };
